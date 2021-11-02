@@ -1,0 +1,197 @@
+<div class="signup-modal" role="document">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()"><span
+                aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Registration Form</h4>
+    </div>
+    <div class="modal-body">
+        <div class="stepwizard col-md-12">
+            <div class="stepwizard-row setup-panel">
+                <div class="stepwizard-step"><a type="button" class="btn btn-circle"
+                                                [ngClass]="{'btn-primary': step == 1, 'btn-default': step != 1}">1</a>
+                    <p style="text-transform:uppercase;">Personal Info</p>
+                </div>
+                <div class="stepwizard-step"><a type="button" class="btn btn-default btn-circle"
+                                                [ngClass]="{'btn-primary': step == 2, 'btn-default': step != 2}">2</a>
+                    <p style="text-transform:uppercase;">Contact Info</p>
+                </div>
+                <div class="stepwizard-step"><a type="button" class="btn btn-default btn-circle"
+                                                [ngClass]="{'btn-primary': step == 3, 'btn-default': step != 3}">3</a>
+                    <p style="text-transform:uppercase;">Verification</p>
+                </div>
+            </div>
+        </div>
+        <form class="form" [hidden]="step != 1" [formGroup]="personalForm">
+            <div class="row setup-content" id="step-1">
+                <div class="col-md-12" style="margin-top:40px;">
+                    <div class="form-group col-md-6" [ngClass]="validate.displayFieldCss(personalForm, 'firstName')">
+                        <label class="control-label">First Name</label>
+                        <input maxlength="100" type="text" class="form-control" name="firstname" [(ngModel)]="info.firstName" formControlName="firstName"/>
+                    </div>
+                    <div class="form-group col-md-6" [ngClass]="validate.displayFieldCss(personalForm, 'middleName')">
+                        <label class="control-label">Middle Name/s</label>
+                        <input maxlength="100" type="text" class="form-control" name="middleName" [(ngModel)]="info.middleName" formControlName="middleName"/>
+                    </div>
+                    <div class="form-group col-md-6" [ngClass]="validate.displayFieldCss(personalForm, 'lastName')">
+                        <label class="control-label">Last Name</label>
+                        <input maxlength="100" type="text" class="form-control" name="lastName" [(ngModel)]="info.lastName" formControlName="lastName"/>
+                    </div>
+                    <div class="form-group col-md-3 date" [ngClass]="validate.displayFieldCss(personalForm, 'birthday')">
+                        <label class="control-label">Date of Birth</label>
+                        <input [(ngModel)]="info.birthday" formControlName="birthday" [owlDateTime]="birthday" [owlDateTimeTrigger]="birthday" class="form-control"/>
+                        <owl-date-time pickerType="calendar" #birthday></owl-date-time>
+                    </div>
+                    <div class="form-group col-md-3" [ngClass]="validate.displayFieldCss(personalForm, 'preferredCurrency')">
+                        <label class="control-label">Preferred Currency</label>
+                        <input maxlength="100" type="text" class="form-control" name="preferredCurrency" [(ngModel)]="info.preferredCurrency" formControlName="preferredCurrency"/>
+                    </div>
+                    <div class="col-md-12" style="margin-bottom:15px; margin-top:-5px;" [ngClass]="validate.displayFieldCss(personalForm, 'username')">
+                        <label class="control-label">User Name</label>
+                        <div class="input-group"><span class="input-group-addon" id="basic-addon1">@</span>
+                            <input type="text" class="form-control" placeholder="Username"
+                                   aria-describedby="basic-addon1" name="username" [(ngModel)]="info.username" formControlName="username">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6" [ngClass]="validate.displayFieldCss(personalForm, 'password')">
+                        <label class="control-label">Password</label>
+                        <input maxlength="100" type="password" class="form-control" name="password" [(ngModel)]="info.password" formControlName="password"/>
+                    </div>
+                    <div class="form-group col-md-6" [ngClass]="validate.displayFieldCss(personalForm, 'repeatPassword')">
+                        <label class="control-label">Re-enter password</label>
+                        <input maxlength="100" type="password" class="form-control" name="repeatPassword" [(ngModel)]="info.repeatPassword" formControlName="repeatPassword"/>
+                    </div>
+                    <button class="btn btn-primary nextBtn  pull-right" type="button" (click)="submitPersonalInfo()">Next</button>
+                </div>
+            </div>
+        </form>
+        <form class="form" [hidden]="step != 2" [formGroup]="contactForm">
+            <div class="row setup-content" id="step-2">
+                <div class="col-md-12" style="margin-top:40px;">
+                    <div class="form-group col-md-6" [ngClass]="validate.displayFieldCss(contactForm, 'country')">
+                        <label class="control-label">Country of Residence</label>
+                        <select class="form-control" name="country" [(ngModel)]="info.country" formControlName="country">
+                            <option *ngFor="let country of setting.countries" [value]="country.symbol">{{country.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6" [ngClass]="validate.displayFieldCss(contactForm, 'nationality')">
+                        <label class="control-label">Nationality</label>
+                        <input maxlength="100" type="text" class="form-control" name="nationality" [(ngModel)]="info.nationality" formControlName="nationality"/>
+                    </div>
+                    <div class="form-group col-md-6" [ngClass]="validate.displayFieldCss(contactForm, 'address1')">
+                        <label class="control-label">Correspondent Address</label>
+                        <input maxlength="100" type="text" class="form-control" name="address1" [(ngModel)]="info.address1" formControlName="address1"/>
+                    </div>
+                    <div class="form-group col-md-6" [ngClass]="validate.displayFieldCss(contactForm, 'address2')">
+                        <label class="control-label">Address Line 2</label>
+                        <input maxlength="100" type="text" class="form-control" name="address2" [(ngModel)]="info.address2" formControlName="address2"/>
+                    </div>
+                    <div class="form-group col-md-6" [ngClass]="validate.displayFieldCss(contactForm, 'telephone')">
+                        <label class="control-label">Tele</label>
+                        <input maxlength="100" type="text" class="form-control" name="telephone" [(ngModel)]="info.telephone" formControlName="telephone"/>
+                    </div>
+                    <div class="form-group col-md-6" [ngClass]="validate.displayFieldCss(contactForm, 'email')">
+                        <label class="control-label">Email</label>
+                        <input maxlength="100" type="text" class="form-control" name="email" [(ngModel)]="info.email" formControlName="email"/>
+                    </div>
+                    <button class="btn btn-primary nextBtn  pull-right" type="button" (click)="submitContactInfo()">Next</button>
+                </div>
+            </div>
+        </form>
+        <form class="form" [hidden]="step != 3">
+            <div class="row setup-content" id="step-3">
+                <div class="col-md-12" style="margin-top:40px;">
+                    <div class="form-group col-md-6">
+                        <label class="control-label">First Name</label>
+                        <input maxlength="100" type="text" class="form-control" disabled [(ngModel)]="info.firstName" name="firstname"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Middle Name/s</label>
+                        <input maxlength="100" type="text" class="form-control" disabled [(ngModel)]="info.middleName" name="middleName"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Last Name</label>
+                        <input maxlength="100" type="text" class="form-control" disabled [(ngModel)]="info.lastName" name="lastName"/>
+                    </div>
+                    <div class="form-group col-md-3 date">
+                        <label class="control-label">Date of Birth</label>
+                        <input [(ngModel)]="info.birthday" [owlDateTime]="birthday1" [owlDateTimeTrigger]="birthday1" class="form-control" disabled name="birthday1"/>
+                        <owl-date-time pickerType="calendar" #birthday1></owl-date-time>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label">Preferred Currency</label>
+                        <input maxlength="100" type="text" class="form-control" disabled name="preferredCurrency" [(ngModel)]="info.preferredCurrency"/>
+                    </div>
+                    <div class="col-md-12" style="margin-bottom:15px; margin-top:-5px;">
+                        <label class="control-label">User Name</label>
+                        <div class="input-group"><span class="input-group-addon" id="basic-addon1">@</span>
+                            <input type="text" class="form-control" aria-describedby="basic-addon1" disabled [(ngModel)]="info.username" name="username">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Country of Residence</label>
+
+                        <select class="form-control" disabled [(ngModel)]="info.country" name="country">
+                            <option *ngFor="let country of setting.countries" [value]="country.symbol">{{country.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Nationality</label>
+                        <input maxlength="100" type="text" class="form-control" disabled [(ngModel)]="info.nationality" name="nationality"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Correspondent Address</label>
+                        <input maxlength="100" type="text" class="form-control"
+                               placeholder="No : 235/5, Buckingham County" disabled [(ngModel)]="info.address1" name="address1"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Address Line 2</label>
+                        <input maxlength="100" type="text" class="form-control" disabled [(ngModel)]="info.address2" name="address2"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Tele</label>
+                        <input maxlength="100" type="text" class="form-control" disabled [(ngModel)]="info.telephone" name="telephone"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Email</label>
+                        <input maxlength="100" type="text" class="form-control" disabled [(ngModel)]="info.email" name="email"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Password</label>
+                        <input maxlength="100" type="password" class="form-control" disabled [(ngModel)]="info.password" name="password"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Re-enter password</label>
+                        <input maxlength="100" type="password" class="form-control" disabled [(ngModel)]="info.password" name="password"/>
+                    </div>
+                    <div class="col-md-12" style="margin-bottom:30px;"><img src="assets/images/captcha.png"
+                                                                            class="img-responsive center-block">
+                    </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-primary  center-block" type="submit" (click)="createAccount()" [disabled]="emailSent">Create Account</button>
+                    </div>
+                </div>
+                <div class="col-md-12" *ngIf="emailSent">
+                    <div class="col-md-12 verificationBox">
+                        <div class="col-md-12"
+                             style="font-size:50px; color:#FFFFFF; margin-top:20px; text-align:center;"><i
+                                class="far fa-thumbs-up"></i></div>
+                        <div class="verificationBoxText">Verification Email has been sent to the email address
+                            provided.<br>
+                            Please click the link provided to complete the email verification.
+                        </div>
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-default btn-lg center-block mainSliderButton1">
+                                <i class="far fa-envelope"></i>Take me to my Inbox
+                            </button>
+                        </div>
+                        <div class="verificationBoxText2"><br>
+                            I still haven’t received the email Please Resend !
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

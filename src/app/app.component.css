@@ -1,0 +1,4 @@
+mat-progress-bar {
+    position: absolute!important;
+    z-index: 1500;
+}

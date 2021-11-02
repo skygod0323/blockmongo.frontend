@@ -1,0 +1,14 @@
+
+.countdown li {
+  display: inline-block;
+  font-size: 15px;
+  list-style-type: none;
+  padding: 5px;
+  text-transform: uppercase;
+}
+
+.countdown li span {
+  display: block;
+  font-size: 55px;
+  font-weight:bold;
+}

@@ -1,0 +1,19 @@
+canvas {
+  display: block;
+  vertical-align: bottom;
+  height:600px !important;
+}
+
+#particles-js {
+  margin-top:0px;
+  padding-top:0px;
+  background-image: url(../images/home-bg.jpg);
+  position: inherit;
+  z-index:-1;
+  background-repeat: no-repeat;
+  background-position: top center;
+  height:auto;
+}
+
+
+
